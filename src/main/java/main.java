@@ -2,27 +2,46 @@ import java.util.Arrays;
 
 public class main {
 
+    private static int countLoop;
+
     public static void main(String[] args) {
 
-        int n = 100;
+        int n = 50;
 
         int[] myArrInt = new int[n];
         for (int i = 0; i < n; i++){
             myArrInt[i] = ((int) (Math.random() * 100) + 10);
         }
-
-        Double myArrDouble[] = new Double[n];
+        Double[] myArrDouble = new Double[n];
         for (int i = 0; i < n; i++){
             myArrDouble[i] = Math.random();
         }
+        Integer[] myArrInteger = new Integer[n];
+        for (int i = 0; i < n; i++){
+            Integer number = ((int) ((Math.random() * 100) + 10));
+            myArrInteger[i] = number;
+        }
 
-        System.out.println("Unsort double " + Arrays.toString(myArrDouble));
-        bubbleSortD(myArrDouble);
-        System.out.println("Sort double " + Arrays.toString(myArrDouble));
 
-        System.out.println("Unsort int " + Arrays.toString(myArrInt));
-        bubbleSort(myArrInt);
-        System.out.println("Sort int " + Arrays.toString(myArrInt));
+//        System.out.println("bubbleSort Unsort " + Arrays.toString(myArrDouble));
+//        bubbleSortD(myArrDouble);
+//        System.out.println("bubbleSort Sort " + Arrays.toString(myArrDouble));
+//
+//        System.out.println("bubbleSort Unsort " + Arrays.toString(myArrInt));
+//        bubbleSort(myArrInt);
+//        System.out.println("bubbleSort Sort " + Arrays.toString(myArrInt));
+
+//        System.out.println("shakerSort Unsort " + Arrays.toString(myArrInt));
+//        shakerSort(myArrInt);
+//        System.out.println("shakerSort Sort " + Arrays.toString(myArrInt));
+
+//        System.out.println("combSort Unsort " + Arrays.toString(myArrInteger));
+//        combSort(myArrInteger);
+//        System.out.println("combSort Sort " + Arrays.toString(myArrInteger));
+
+        System.out.println("shakerSort Unsort " + Arrays.toString(myArrInt));
+        insertionSort(myArrInt);
+        System.out.println("shakerSort Sort " + Arrays.toString(myArrInt));
 
 
     }
@@ -37,6 +56,9 @@ public class main {
                 arrUnsort[i] = arrUnsort[i + 1];
                 arrUnsort[i + 1] = temp;
                 count++;
+
+                countLoop++;
+                System.out.println(countLoop +" "+ Arrays.toString(arrUnsort));
             }
         }
         if (count > 0) {
@@ -72,12 +94,15 @@ public class main {
                     array[i] = array[i + 1];
                     array[i + 1] = temp;
                     unsorted = true;
+
+                    countLoop++;
+                    System.out.println(countLoop +" "+ Arrays.toString(array));
                 }
             }
         }
     }
 
-    public static void shakerSort(int arr[]) {
+    public static void shakerSort(int[] arr) {
         int buff;
         int left = 0;
         int right = arr.length - 1;
@@ -98,7 +123,51 @@ public class main {
                 }
             }
             left++;
+
+            countLoop++;
+            System.out.println(countLoop +" - "+ Arrays.toString(arr));
+
         } while (left < right);
+    }
+
+    public static <E extends Comparable<? super E>> void combSort(E[] input) {
+        int gap = input.length;
+        boolean swapped = true;
+        while (gap > 1 || swapped) {
+            if (gap > 1)
+                gap = (int) (gap / 1.247330950103979);
+
+            int i = 0;
+            swapped = false;
+            while (i + gap < input.length) {
+
+                if (input[i].compareTo(input[i + gap]) > 0) {
+                    E t = input[i];
+                    input[i] = input[i + gap];
+                    input[i + gap] = t;
+                    swapped = true;
+                }
+                i++;
+
+                countLoop++;
+                System.out.println(countLoop +" - "+ Arrays.toString(input));
+            }
+        }
+    }
+
+    public static void insertionSort(int[] array) {
+        for (int i = 1; i < array.length; i++) {
+            int current = array[i];
+            int j = i - 1;
+            while(j >= 0 && current < array[j]) {
+                array[j+1] = array[j];
+                j--;
+            }
+            array[j+1] = current;
+
+            countLoop++;
+            System.out.println(countLoop +" - "+ Arrays.toString(array));
+        }
     }
 
 
